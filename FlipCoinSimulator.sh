@@ -1,12 +1,11 @@
-# Set the number of times to flip the coin
-num_flips=10
+target_wins=21
 
 # Initialize counters for heads and tails
 heads=0
 tails=0
 
-# Flip the coin and increment the corresponding counter
-for (( i=1; i<=$num_flips; i++ ))
+# Flip the coin until one side wins the target number of times
+while [ $heads -lt $target_wins ] && [ $tails -lt $target_wins ]
 do
   result=$((RANDOM % 2))
   if [ $result -eq 0 ]
@@ -18,6 +17,13 @@ do
 done
 
 # Display the results
-echo "Results after $num_flips flips:"
-echo "Heads: $heads"
-echo "Tails: $tails"
+echo "Results after $((heads+tails)) flips:"
+if [ $heads -gt $tails ]
+then
+  echo "Heads wins by $((heads-tails))"
+elif [ $tails -gt $heads ]
+then
+  echo "Tails wins by $((tails-heads))"
+else
+  echo "It's a tie!"
+fi
